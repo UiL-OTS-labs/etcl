@@ -26,12 +26,18 @@ $(function() {
 
     depends_on_value('has_prepost', 'True', 'pre_duration');
     depends_on_value('has_prepost', 'True', 'pre_registrations');
+    depends_on_value('has_prepost', 'True', 'pre_registrations_details');
+    depends_on_value('has_prepost', 'True', 'pre_registration_kinds');
+    depends_on_value('has_prepost', 'True', 'pre_registration_kinds_details');
     check_field_required('pre_registrations', 'needs_details', 'pre_registrations_details', 'core', 'Registration');
     check_field_required('pre_registrations', 'needs_kind', 'pre_registration_kinds', 'core', 'Registration');
     check_field_required('pre_registration_kinds', 'needs_details', 'pre_registration_kinds_details', 'core', 'RegistrationKind');
 
     depends_on_value('has_prepost', 'True', 'post_duration');
     depends_on_value('has_prepost', 'True', 'post_registrations');
+    depends_on_value('has_prepost', 'True', 'post_registrations_details');
+    depends_on_value('has_prepost', 'True', 'post_registration_kinds');
+    depends_on_value('has_prepost', 'True', 'post_registration_kinds_details');
     check_field_required('post_registrations', 'needs_details', 'post_registrations_details', 'core', 'Registration');
     check_field_required('post_registrations', 'needs_kind', 'post_registration_kinds', 'core', 'Registration');
     check_field_required('post_registration_kinds', 'needs_details', 'post_registration_kinds_details', 'core', 'RegistrationKind');
@@ -41,7 +47,16 @@ $(function() {
     add_title('setting', "{% trans 'Setting' %}");
     add_title('period', "{% trans 'Periode en duur' %}");
     add_title('has_prepost', "{% trans 'Voor- en nameting' %}");
+    add_title('pre_duration', "{% trans 'Details voormeting' %}");
+    add_title('post_duration', "{% trans 'Details nameting' %}");
     add_title('experimenter', "{% trans 'Details interventie' %}");
+
+    $('input[name=has_prepost]').change(function() {
+        var check = $('input[name=has_prepost]:checked').val() === 'True';
+        $('#id_pre_duration').parents('tr').prev().toggle(check);
+        $('#id_post_duration').parents('tr').prev().toggle(check);
+    });
+    $('input[name=has_prepost]').change();
 });
 </script>
 {% include "studies/study_title.html" %}

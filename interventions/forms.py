@@ -53,10 +53,18 @@ class InterventionForm(ConditionalModelForm):
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_details', 'setting_details')
         # TODO: this doesn't work as supervision is a boolean value
         self.check_dependency_multiple(cleaned_data, 'setting', 'needs_supervision', 'supervision')
-        self.check_dependency(cleaned_data, 'has_controls', 'has_controls_details')
 
-        if cleaned_data.get('has_recording') and not cleaned_data.get('recording_same_experimenter'):
-            if not cleaned_data.get('recording_experimenter'):
-                self.add_error('recording_experimenter', forms.ValidationError(_('Dit veld is verplicht.'), code='required'))
-            if cleaned_data.get('experimenter') == cleaned_data.get('recording_experimenter'):
-                self.add_error('recording_experimenter', forms.ValidationError(_('U moet een andere uitvoerende selecteren.'), code='required'))
+        self.check_dependency(cleaned_data, 'has_prepost', 'prepost_experimenter')
+        self.check_dependency(cleaned_data, 'has_prepost', 'prepost_description')
+        self.check_dependency(cleaned_data, 'has_prepost', 'pre_duration')
+        self.check_dependency(cleaned_data, 'has_prepost', 'pre_registrations')
+        self.check_dependency_multiple(cleaned_data, 'pre_registrations', 'needs_kind', 'pre_registration_kinds')
+        self.check_dependency_multiple(cleaned_data, 'pre_registrations', 'needs_details', 'pre_registrations_details')
+        self.check_dependency_multiple(cleaned_data, 'pre_registration_kinds', 'needs_details', 'pre_registration_kinds_details')
+        self.check_dependency(cleaned_data, 'has_prepost', 'post_duration')
+        self.check_dependency(cleaned_data, 'has_prepost', 'post_registrations')
+        self.check_dependency_multiple(cleaned_data, 'post_registrations', 'needs_kind', 'post_registration_kinds')
+        self.check_dependency_multiple(cleaned_data, 'post_registrations', 'needs_details', 'post_registrations_details')
+        self.check_dependency_multiple(cleaned_data, 'post_registration_kinds', 'needs_details', 'post_registration_kinds_details')
+
+        self.check_dependency(cleaned_data, 'has_controls', 'controls_description')

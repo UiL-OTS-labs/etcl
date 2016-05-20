@@ -33,7 +33,8 @@ class Intervention(SettingModel):
     pre_registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe worden de gegevens bij de voormeting vastgelegd?'),
-        related_name='pre_registrations')
+        related_name='pre_registrations',
+        blank=True)
     pre_registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,
@@ -55,7 +56,8 @@ class Intervention(SettingModel):
     post_registrations = models.ManyToManyField(
         Registration,
         verbose_name=_('Hoe worden de gegevens bij de nameting vastgelegd?'),
-        related_name='post_registrations')
+        related_name='post_registrations',
+        blank=True)
     post_registrations_details = models.CharField(
         _('Namelijk'),
         max_length=200,
