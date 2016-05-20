@@ -7,24 +7,26 @@ from .models import Intervention
 
 
 class InterventionForm(ConditionalModelForm):
-    has_observation = forms.BooleanField(label=_('Observatie'), label_suffix='', required=False)
-    has_sessions = forms.BooleanField(label=_('Taak/taken'), label_suffix='', required=False)
-
     class Meta:
         model = Intervention
         fields = [
             'setting', 'setting_details', 'supervision',
-            'number', 'duration', 'experimenter', 'description',
-            'has_controls', 'has_controls_details',
-            'has_recording', 'recording_same_experimenter', 'recording_experimenter',
+            'period', 'amount_per_week', 'duration',
+            'has_prepost', 'prepost_experimenter', 'prepost_description',
+            'pre_duration', 'pre_registrations', 'pre_registrations_details', 'pre_registration_kinds', 'pre_registration_kinds_details',
+            'post_duration', 'post_registrations', 'post_registrations_details', 'post_registration_kinds', 'post_registration_kinds_details',
+            'experimenter', 'description',
+            'has_controls', 'controls_description',
             ]
         widgets = {
             'setting': forms.CheckboxSelectMultiple(),
             'supervision': forms.RadioSelect(choices=YES_NO),
-            'description': forms.Textarea(attrs={'cols': 50}),
+            'has_prepost': forms.RadioSelect(choices=YES_NO),
+            'pre_registrations': forms.CheckboxSelectMultiple(),
+            'pre_registration_kinds': forms.CheckboxSelectMultiple(),
+            'post_registrations': forms.CheckboxSelectMultiple(),
+            'post_registration_kinds': forms.CheckboxSelectMultiple(),
             'has_controls': forms.RadioSelect(choices=YES_NO),
-            'has_recording': forms.RadioSelect(choices=YES_NO),
-            'recording_same_experimenter': forms.RadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -35,10 +37,7 @@ class InterventionForm(ConditionalModelForm):
         self.study = kwargs.pop('study', None)
         super(InterventionForm, self).__init__(*args, **kwargs)
         applicants = get_users_as_list(self.study.proposal.applicants.all())
-        self.fields['experimenter'].choices = applicants
-        self.fields['recording_experimenter'].choices = applicants
-        self.fields['has_observation'].initial = self.study.has_observation
-        self.fields['has_sessions'].initial = self.study.has_sessions
+        self.fields['prepost_experimenter'].choices = applicants
 
     def clean(self):
         """

@@ -32,14 +32,6 @@ class InterventionMixin(object):
         context['progress'] = get_study_progress(study) + 7
         return context
 
-    def form_valid(self, form):
-        """Sets the extra fields from the ModelForm on the Study"""
-        study = self.get_study()
-        study.has_observation = self.request.POST.get('has_observation', False)
-        study.has_sessions = self.request.POST.get('has_sessions', False)
-        study.save()
-        return super(InterventionMixin, self).form_valid(form)
-
     def get_next_url(self):
         study = self.get_study()
         next_url = 'studies:session_end'

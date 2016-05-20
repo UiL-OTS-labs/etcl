@@ -7,7 +7,7 @@
         "order": 1,
         "description": "EEG (electroencephalography)"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 1
 },
 {
@@ -18,7 +18,7 @@
         "order": 1,
         "description": "fMRI (functional magnetic resonance imaging)"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 1
 },
 {
@@ -29,7 +29,7 @@
         "order": 3,
         "description": "fNIRS (functional near-infrared spectroscopy)"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 3
 },
 {
@@ -40,7 +40,7 @@
         "order": 4,
         "description": "fEMG (facial electromyography)"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 4
 },
 {
@@ -51,7 +51,7 @@
         "order": 5,
         "description": "EMA (electromagnetic articulography)"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 5
 },
 {
@@ -62,7 +62,7 @@
         "order": 6,
         "description": "huidgeleiding (SC/GSR)"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 6
 },
 {
@@ -73,7 +73,7 @@
         "order": 7,
         "description": "ECG (electrocardiography)"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 7
 },
 {
@@ -84,7 +84,7 @@
         "order": 8,
         "description": "BVP (blood volume pulse)"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 8
 },
 {
@@ -95,7 +95,7 @@
         "order": 9,
         "description": "ademhaling"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 9
 },
 {
@@ -106,7 +106,7 @@
         "order": 10,
         "description": "vingertemperatuur"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 10
 },
 {
@@ -117,7 +117,7 @@
         "order": 11,
         "description": "anders, namelijk"
     },
-    "model": "tasks.registrationkind",
+    "model": "core.registrationkind",
     "pk": 11
 }
 ]

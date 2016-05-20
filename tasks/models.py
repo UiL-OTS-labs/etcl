@@ -2,23 +2,12 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import Setting
+from core.models import Registration, RegistrationKind, SettingModel
 from studies.models import Study
 
 
-class Session(models.Model):
+class Session(SettingModel):
     order = models.PositiveIntegerField()
-    setting = models.ManyToManyField(
-        Setting,
-        verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'))
-    setting_details = models.CharField(
-        _('Namelijk'),
-        max_length=200,
-        blank=True)
-    supervision = models.NullBooleanField(
-        _('Vindt het afnemen van de taak plaats onder het toeziend oog \
-van de leraar of een ander persoon die bevoegd is?')
-    )
 
     # Fields with respect to Tasks
     tasks_number = models.PositiveIntegerField(
@@ -77,35 +66,6 @@ instructies per taak, pauzes tussen taken, en debriefing? \
 
     def __unicode__(self):
         return _('Sessie {}').format(self.order)
-
-
-class Registration(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    needs_kind = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-    age_min = models.PositiveIntegerField(blank=True, null=True)
-
-    class Meta:
-        ordering = ['order']
-
-    def __unicode__(self):
-        return self.description
-
-
-class RegistrationKind(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-    registration = models.ForeignKey(Registration)
-
-    class Meta:
-        ordering = ['order']
-
-    def __unicode__(self):
-        return self.description
 
 
 class Task(models.Model):
