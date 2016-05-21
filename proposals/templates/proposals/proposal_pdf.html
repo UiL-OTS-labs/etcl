@@ -223,13 +223,69 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% endif %}
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "number" %}</th><td>{{ intervention.number }}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "period" %}</th><td>{{ intervention.period }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "amount_per_week" %}</th><td>{{ intervention.amount_per_week }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "duration" %}</th><td>{{ intervention.duration }}</td>
             </tr>
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "experimenter" %}</th><td>{{ intervention.experimenter.get_full_name }}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "has_prepost" %}</th><td>{{ intervention.has_prepost|yesno:_("ja,nee") }}</td>
+            </tr>
+            {% if intervention.has_prepost %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "prepost_experimenter" %}</th><td>{{ intervention.prepost_experimenter.get_full_name }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "prepost_description" %}</th><td>{{ intervention.prepost_description }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "pre_duration" %}</th><td>{{ intervention.pre_duration }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "pre_registrations" %}</th><td>{{ intervention.pre_registrations.all|unordered_list }}</td>
+            </tr>
+            {% if intervention.pre_registrations.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "pre_registrations_details" %}</th><td>{{ intervention.pre_registrations_details }}</td>
+            </tr>
+            {% endif %}
+            {% if intervention.pre_registrations.all|needs_details:"needs_kind" %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "pre_registration_kinds" %}</th><td>{{ intervention.pre_registration_kinds.all|unordered_list }}</td>
+            </tr>
+            {% if intervention.pre_registration_kinds.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "pre_registration_kinds_details" %}</th><td>{{ intervention.pre_registration_kinds_details }}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "post_duration" %}</th><td>{{ intervention.post_duration }}</td>
+            </tr>
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "post_registrations" %}</th><td>{{ intervention.post_registrations.all|unordered_list }}</td>
+            </tr>
+            {% if intervention.post_registrations.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "post_registrations_details" %}</th><td>{{ intervention.post_registrations_details }}</td>
+            </tr>
+            {% endif %}
+            {% if intervention.post_registrations.all|needs_details:"needs_kind" %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "post_registration_kinds" %}</th><td>{{ intervention.post_registration_kinds.all|unordered_list }}</td>
+            </tr>
+            {% if intervention.post_registration_kinds.all|needs_details %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "post_registration_kinds_details" %}</th><td>{{ intervention.post_registration_kinds_details }}</td>
+            </tr>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            <tr>
+                <th>{% get_verbose_field_name "interventions" "intervention" "experimenter" %}</th><td>{{ intervention.experimenter }}</td>
             </tr>
             <tr>
                 <th>{% get_verbose_field_name "interventions" "intervention" "description" %}</th><td>{{ intervention.description }}</td>
@@ -239,21 +295,8 @@ Pagina <pdf:pagenumber /> van <pdf:pagecount />
             </tr>
             {% if intervention.has_controls %}
             <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_controls_details" %}</th><td>{{ intervention.has_controls_details }}</td>
+                <th>{% get_verbose_field_name "interventions" "intervention" "controls_description" %}</th><td></td>
             </tr>
-            {% endif %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "has_recording" %}</th><td>{{ intervention.has_recording|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if intervention.has_recording %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "recording_same_experimenter" %}</th><td>{{ intervention.recording_same_experimenter|yesno:_("ja,nee") }}</td>
-            </tr>
-            {% if not intervention.recording_same_experimenter %}
-            <tr>
-                <th>{% get_verbose_field_name "interventions" "intervention" "recording_experimenter" %}</th><td>{{ intervention.recording_experimenter.get_full_name }}</td>
-            </tr>
-            {% endif %}
             {% endif %}
         </table>
         {% endwith %}
