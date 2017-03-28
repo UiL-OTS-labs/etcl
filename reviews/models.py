@@ -39,6 +39,11 @@ class Review(models.Model):
     go = models.NullBooleanField(_('Beslissing'), default=None)
     continuation = models.PositiveIntegerField(_('Afhandeling'), choices=CONTINUATIONS, default=GO)
 
+    confirmation_sent = models.DateTimeField(blank=True, null=True)
+    confirmation_comments = models.TextField(
+        _('Ruimte voor eventuele opmerkingen'),
+        blank=True)
+
     date_start = models.DateTimeField()
     date_end = models.DateTimeField(blank=True, null=True)
     date_should_end = models.DateField(blank=True, null=True)

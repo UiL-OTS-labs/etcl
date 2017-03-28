@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block title %} 
-{% trans "Te beoordelen studies" %}
+{% trans "Afgeronde besluiten" %}
 {% endblock %}
 
 {% block noprogressbar %}{% endblock %}
@@ -16,8 +16,11 @@
     <thead>
         <tr>
             <th>{% trans "Referentienummer" %}</th>
+            <th>{% trans "Eindverantwoordelijke" %}</th>
             <th>{% trans "Titel studie" %}</th>
-            <th>{% trans "Laatst bijgewerkt" %}</th>
+            <th>{% trans "Einddatum review" %}</th>
+            <th>{% trans "Afhandeling" %}</th>
+            <th>{% trans "Bevestiging verstuurd" %}</th>
             <th>{% trans "Acties" %}</th>
         </tr>
     </thead>
@@ -25,11 +28,15 @@
         {% for review in reviews %}
         <tr>
             <td>{{ review.proposal.reference_number }}</td>
+            <td>{{ review.accountable_user.get_full_name }}</td>
             <td>{{ review.proposal.title }}</td>
-            <td>{{ review.proposal.date_modified|date:"j M Y, G:i" }}</td>
+            <td>{{ review.date_end|date:"j M Y, G:i" }}</td>
+            <td>{{ review.get_continuation_display }}</td>
+            <td>{{ review.confirmation_sent|date:"j M Y, G:i"|default:_("Nee") }}</td>
             <td>
-                <a href="{% url 'proposals:pdf' review.proposal.id %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
-                <a href="{% url 'reviews:detail' review.id %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Review inzien' %}"></a>
+                <a href="{% url 'proposals:pdf' review.proposal.pk %}" target="_blank"><img src="{% static 'core/images/page_white_acrobat.png' %}" title="{% trans 'Studie inzien' %}"></a>
+                <a href="{% url 'reviews:detail' review.pk %}"><img src="{% static 'core/images/zoom.png' %}" title="{% trans 'Review inzien' %}"></a>
+                <a href="{% url 'reviews:confirm' review.pk %}"><img src="{% static 'reviews/images/report_go.png' %}" title="{% trans 'Bevestigingsbrief versturen' %}"></a>
             </td>
         </tr>
         {% endfor %}

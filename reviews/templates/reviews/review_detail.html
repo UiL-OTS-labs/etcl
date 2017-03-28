@@ -5,7 +5,7 @@
 
 {% block title %} 
 {% blocktrans with proposal=review.proposal.title %}
-Beslissingen bij aanmelding <em>{{ proposal }}</em>
+Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
 {% endblocktrans %}
 {% endblock %}
 
@@ -31,6 +31,24 @@ Beslissingen bij aanmelding <em>{{ proposal }}</em>
         Afhandeling: {{ continuation }}.
         {% endblocktrans %}
     </li>
+    {% if review.continuation == review.GO %}
+    <li>
+        {% if review.confirmation_sent %}
+        {% blocktrans with confirmation_sent=review.confirmation_sent|date:"j F Y, G:i" %}
+        Bevestigingsbrief verstuurd op {{ confirmation_sent }}.
+        {% endblocktrans %}
+        {% if review.confirmation_comments %}
+        <ul>
+            <li>
+                Opmerkingen: {{ review.confirmation_comments }}
+            </li>
+        </ul>
+        {% endif %}
+        {% else %}
+        Bevestigingsbrief nog niet verstuurd.
+        {% endif %}
+    </li>
+    {% endif %}
     {% endif %}
 </ul>
 

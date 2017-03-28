@@ -62,6 +62,12 @@ class ReviewCloseForm(forms.ModelForm):
         self.fields['in_archive'].widget = forms.RadioSelect(choices=YES_NO)
 
 
+class ReviewConfirmForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['confirmation_comments']
+
+
 class DecisionForm(forms.ModelForm):
     class Meta:
         model = Decision

@@ -8,13 +8,13 @@ from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from core.utils import get_secretary, get_reviewers
 from proposals.models import Proposal
 
-from .forms import ReviewAssignForm, ReviewCloseForm, DecisionForm
+from .forms import ReviewAssignForm, ReviewCloseForm, ReviewConfirmForm, DecisionForm
 from .mixins import UserAllowedMixin, AutoReviewMixin
 from .models import Review, Decision
 from .utils import start_review_route, notify_secretary
 
 
-class DecisionListView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView):
+class DecisionListView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'decisions'
     group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
 
@@ -23,7 +23,7 @@ class DecisionListView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView)
         return Decision.objects.filter(reviewer=self.request.user)
 
 
-class DecisionMyOpenView(LoginRequiredMixin, GroupRequiredMixin, generic.ListView):
+class DecisionMyOpenView(GroupRequiredMixin, generic.ListView):
     context_object_name = 'decisions'
     group_required = [settings.GROUP_SECRETARY, settings.GROUP_COMMISSION]
 
@@ -50,6 +50,14 @@ class SupervisorView(LoginRequiredMixin, generic.ListView):
         return Decision.objects.filter(review__date_end=None, review__stage=Review.SUPERVISOR, reviewer=self.request.user)
 
 
+class ReviewClosedView(GroupRequiredMixin, generic.ListView):
+    context_object_name = 'reviews'
+    group_required = settings.GROUP_SECRETARY
+
+    def get_queryset(self):
+        return Review.objects.filter(stage=Review.CLOSED, continuation=Review.GO)
+
+
 class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.DetailView):
     """
     Shows the Decisions for a Review
@@ -57,13 +65,14 @@ class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, ge
     model = Review
 
 
-class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.UpdateView):
+class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, UserAllowedMixin, generic.UpdateView):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """
     model = Review
     form_class = ReviewAssignForm
     template_name = 'reviews/review_assign_form.html'
+    group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
         return reverse('reviews:my_open')
@@ -101,13 +110,14 @@ class ReviewAssignView(LoginRequiredMixin, AutoReviewMixin, UserAllowedMixin, ge
         return super(ReviewAssignView, self).form_valid(form)
 
 
-class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
+class ReviewCloseView(GroupRequiredMixin, UserAllowedMixin, generic.UpdateView):
     model = Review
     form_class = ReviewCloseForm
     template_name = 'reviews/review_close_form.html'
+    group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        return reverse('reviews:my_archive')
+        return reverse('reviews:closed')
 
     def get_form_kwargs(self):
         kwargs = super(ReviewCloseView, self).get_form_kwargs()
@@ -150,6 +160,22 @@ class ReviewCloseView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
         form.instance.stage = Review.CLOSED
 
         return super(ReviewCloseView, self).form_valid(form)
+
+
+class ReviewConfirmView(GroupRequiredMixin, UserAllowedMixin, generic.UpdateView):
+    model = Review
+    form_class = ReviewConfirmForm
+    template_name = 'reviews/review_confirm_form.html'
+    group_required = settings.GROUP_SECRETARY
+
+    def get_success_url(self):
+        return reverse('reviews:closed')
+
+    def form_valid(self, form):
+        if not form.instance.confirmation_sent:
+            form.instance.confirmation_sent = timezone.now()
+
+        return super(ReviewConfirmView, self).form_valid(form)
 
 
 class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin, generic.UpdateView):
