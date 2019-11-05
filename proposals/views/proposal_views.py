@@ -308,7 +308,20 @@ class ProposalSubmit(AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(ProposalSubmit, self).get_context_data(**kwargs)
 
-        context['errors'] = get_form_errors(self.get_object())
+        proposal = self.get_object()
+        user = self.request.user
+
+        # Supervisors aren't allowed to submit
+        viewed_as_supervisor = user == proposal.supervisor
+
+        # If the supervisor is an applicant, we act like we didn't notice the
+        # fact that they are also a supervisor.
+        if viewed_as_supervisor \
+                and proposal.applicants.filter(pk=user.pk).exists():
+            viewed_as_supervisor = False
+
+        context['errors'] = get_form_errors(proposal)
+        context['viewed_as_supervisor'] = viewed_as_supervisor
 
         return context
 

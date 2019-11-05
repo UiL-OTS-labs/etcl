@@ -2033,7 +2033,19 @@ msgstr "Applicant"
 msgid "Aantal woorden:"
 msgstr "Number of words:"
 
-#: proposals/templates/proposals/proposal_form.html:71
+#: proposals/templates/proposals/proposal_form.html:72
+msgid ""
+"\n"
+"            U past nu een studie aan van een student/PhD kandidaat onder uw "
+"supervisie. Let er op dat u het formulier\n"
+"            invuld alsof u die student/PhD kandidaat bent.\n"
+"        "
+msgstr ""
+"\n"
+"        You are editing a study from a student/PhD candidate under your "
+"supervision. Please note that this form should        be filled in as if you "
+"were that student/PhD candidate.    "
+
 #: proposals/templates/proposals/proposal_form_pre_approved.html:87
 msgid ""
 "\n"
@@ -2741,6 +2753,13 @@ msgstr ""
 "This is probably because you have not yet filled in all required fields. You "
 "can submit your application when these errors have been corrected.\n"
 "    "
+
+#: proposals/templates/proposals/proposal_submit.html:112
+msgid ""
+"\n"
+"\n"
+"        "
+msgstr ""
 
 #: proposals/templates/proposals/proposal_submitted.html:8
 msgid "Aanvraag voor voortoetsing verstuurd"
@@ -4588,6 +4607,12 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Bestaande studie kopiëren"
+#~ msgstr "Copy existing application"
+
+#~ msgid "Studie kopiëren"
+#~ msgstr "Copy application"
 
 #~ msgid "Revisie/amendement maken"
 #~ msgstr "Copy application for revision/amendment"

@@ -107,9 +107,17 @@
     </div>
 {% endif %}
 
+{% if viewed_as_supervisor %}
+    <div class="warning">
+        {% blocktrans %}
+            U kunt deze studie niet indienen, omdat u als eindverantwoordelijke staat ingesteld. Alleen uw student/PhD kandidaat kan hem indienen!
+        {% endblocktrans %}
+    </div>
+{% endif %}
+
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
     <table>{{ form.as_table }}</table>
-    {% if errors %}
+    {% if errors or viewed_as_supervisor %}
         {% include "base/form_buttons.html" with no_forward=1 %}
     {% else %}
         {% if proposal.is_pre_assessment %}
