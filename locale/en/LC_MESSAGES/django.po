@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-05 11:10+0100\n"
+"POT-Creation-Date: 2019-11-05 11:37+0100\n"
 "PO-Revision-Date: 2017-10-26 20:51+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -317,8 +317,7 @@ msgstr "Start a new preliminary assessment study"
 msgid ""
 "Nieuwe studie starten (die al goedgekeurd is door een andere ethische "
 "toetsings comissie)"
-msgstr ""
-"Start a new study (that has been approved by another ethics committee)"
+msgstr "Start a new study (that has been approved by another ethics committee)"
 
 #: core/templates/base/menu.html:23
 msgid "Nieuwe studie starten op basis van een kopie van een oude studie"
@@ -2757,9 +2756,15 @@ msgstr ""
 #: proposals/templates/proposals/proposal_submit.html:112
 msgid ""
 "\n"
-"\n"
+"            U kunt deze studie niet indienen, omdat u als "
+"eindverantwoordelijke staat ingesteld. Alleen uw student/PhD kandidaat kan "
+"hem indienen!\n"
 "        "
 msgstr ""
+"\n"
+"            You cannot submit this application because you are listed as the "
+"researcher with final responsibility. Only your student/PhD candidate can "
+"submit this study!         "
 
 #: proposals/templates/proposals/proposal_submitted.html:8
 msgid "Aanvraag voor voortoetsing verstuurd"
@@ -4607,12 +4612,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:50
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "Bestaande studie kopiëren"
-#~ msgstr "Copy existing application"
-
-#~ msgid "Studie kopiëren"
-#~ msgstr "Copy application"
-
-#~ msgid "Revisie/amendement maken"
-#~ msgstr "Copy application for revision/amendment"
