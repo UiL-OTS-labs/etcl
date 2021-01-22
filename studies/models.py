@@ -10,6 +10,7 @@ from main.models import YES_NO_DOUBT
 from main.validators import validate_pdf_or_doc
 from proposals.models import Proposal
 from studies.utils import study_urls
+from proposals.utils.proposal_utils import filename_factory, OverwriteStorage
 
 
 class AgeGroup(models.Model):
@@ -414,35 +415,47 @@ class Documents(models.Model):
     informed_consent = models.FileField(
         _('Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+        upload_to=filename_factory('Informed_Consent'),
+        storage=OverwriteStorage(),
+    )
+        
     briefing = models.FileField(
         _('Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc])
+        validators=[validate_pdf_or_doc],
+        upload_to=filename_factory('Briefing'),
+        storage=OverwriteStorage(),
+    )
 
     director_consent_declaration = models.FileField(
         _(
             'Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)'),
         blank=True,
         validators=[validate_pdf_or_doc],
-        help_text=(
-            'If it is already signed, upload the signed declaration form. If it is not signed yet, '
-            'you can upload the unsigned document and send the document when it is signed to the'
-            ' secretary of the FEtC-H')
+        help_text=('If it is already signed, upload the signed declaration form. If it is not signed yet, '
+                   'you can upload the unsigned document and send the document when it is signed to the'
+                   ' secretary of the FEtC-H'),
+        upload_to=filename_factory('Department_Consent'),
+        storage=OverwriteStorage(),
     )
 
     director_consent_information = models.FileField(
         _(
             'Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
+        upload_to=filename_factory('Department_Info'),
+        storage=OverwriteStorage(),
     )
 
     parents_information = models.FileField(
         _(
             'Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
         blank=True,
-        validators=[validate_pdf_or_doc]
+        validators=[validate_pdf_or_doc],
+        upload_to=filename_factory('Parental_Info'),
+        storage=OverwriteStorage(),
     )
 
     def save(self, *args, **kwargs):
